@@ -14,8 +14,17 @@ module.exports = function(path, cb) {
 
         //get text on a particular page
         result.data.Pages.forEach(function(page) {
-            var chunks = _(page.Texts).map('R').flatten().map('T').map(decodeURIComponent).value();
-            text = text.concat(chunks);
+            for (var i = 0; i < page.Texts.length; i++) {
+                var chunk = {};
+                var content = page.Texts[i].R[0];
+                chunk.text = decodeURIComponent(content.T);
+                if (content.TS[2] > 0) {
+                    chunk.bold = true;
+                } else {
+                    chunk.bold = false;
+                }
+                text.push(chunk);
+            }
         });
 
         parser.destroy();
