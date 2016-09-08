@@ -16,6 +16,7 @@ module.exports = function(path, cb) {
         result.data.Pages.forEach(function(page) {
             for (var i = 0; i < page.Texts.length; i++) {
                 var chunk = {};
+                chunk.y = page.Texts[i].y;
                 var content = page.Texts[i].R[0];
                 chunk.text = decodeURIComponent(content.T);
                 if (content.TS[2] > 0) {
